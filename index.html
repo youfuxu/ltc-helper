@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="zh-Hant-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>長照補助試算器｜3 分鐘算出長照 3.0 政府補助金額（2026 最新）</title>
+<meta name="description" content="家裡長輩需要照顧？免費試算長照 3.0 四包錢補助：照顧服務每月最高 36,180 元、喘息服務、輔具補助、交通接送。2026 新制，聘外籍看護也能申請。">
+<meta property="og:title" content="長照補助試算器｜3 分鐘算出政府每月補助你多少">
+<meta property="og:description" content="長照 3.0 四包錢免費試算：照顧服務、喘息、輔具、交通接送。2026 新制，聘外籍看護也能申請。">
+<meta property="og:type" content="website">
+<style>
+  :root {
+    --teal: #0f766e;
+    --teal-dark: #115e59;
+    --teal-light: #f0fdfa;
+    --orange: #ea580c;
+    --orange-dark: #c2410c;
+    --ink: #1f2937;
+    --ink-soft: #4b5563;
+    --line: #e5e7eb;
+    --bg: #fafaf9;
+    --card: #ffffff;
+    --gold: #fef3c7;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: "Microsoft JhengHei", "PingFang TC", "Noto Sans TC", system-ui, sans-serif;
+    font-size: 18px;
+    line-height: 1.8;
+    color: var(--ink);
+    background: var(--bg);
+  }
+  .wrap { max-width: 720px; margin: 0 auto; padding: 0 20px; }
+
+  /* Hero */
+  .hero { background: linear-gradient(160deg, var(--teal) 0%, var(--teal-dark) 100%); color: #fff; padding: 56px 0 48px; text-align: center; }
+  .hero .badge { display: inline-block; background: rgba(255,255,255,.15); border: 1px solid rgba(255,255,255,.35); border-radius: 999px; padding: 4px 16px; font-size: 15px; margin-bottom: 20px; }
+  .hero h1 { font-size: 32px; line-height: 1.4; font-weight: 700; margin-bottom: 16px; }
+  .hero p { font-size: 19px; opacity: .92; max-width: 560px; margin: 0 auto 28px; }
+  .hero .cta { display: inline-block; background: var(--orange); color: #fff; font-size: 20px; font-weight: 700; padding: 14px 40px; border-radius: 12px; text-decoration: none; box-shadow: 0 4px 14px rgba(0,0,0,.25); }
+  .hero .cta:hover { background: var(--orange-dark); }
+  .hero .sub { font-size: 14px; opacity: .75; margin-top: 12px; }
+
+  /* Pain points */
+  .pains { padding: 48px 0; }
+  .pains h2, section h2 { font-size: 26px; text-align: center; margin-bottom: 28px; color: var(--teal-dark); }
+  .pain-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; }
+  .pain { background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 20px; }
+  .pain .emoji { font-size: 32px; }
+  .pain h3 { font-size: 18px; margin: 8px 0 4px; }
+  .pain p { font-size: 16px; color: var(--ink-soft); }
+
+  /* Calculator */
+  .calc { background: var(--teal-light); padding: 48px 0 56px; }
+  .calc-card { background: var(--card); border: 1px solid var(--line); border-radius: 18px; padding: 28px 24px; box-shadow: 0 2px 10px rgba(0,0,0,.05); }
+  .q { margin-bottom: 26px; }
+  .q-label { font-size: 19px; font-weight: 700; margin-bottom: 12px; display: block; }
+  .q-label .num { display: inline-block; background: var(--teal); color: #fff; width: 28px; height: 28px; border-radius: 50%; text-align: center; line-height: 28px; font-size: 16px; margin-right: 8px; }
+  .opts { display: flex; flex-wrap: wrap; gap: 10px; }
+  .opt { flex: 1 1 calc(50% - 10px); min-width: 140px; }
+  .opt input { display: none; }
+  .opt span {
+    display: block; text-align: center; padding: 12px 10px; border: 2px solid var(--line);
+    border-radius: 12px; cursor: pointer; font-size: 17px; background: #fff; transition: all .15s;
+  }
+  .opt input:checked + span { border-color: var(--teal); background: var(--teal-light); font-weight: 700; color: var(--teal-dark); }
+  .opt-full { flex: 1 1 100%; }
+  .hint { font-size: 15px; color: var(--ink-soft); margin-top: 6px; }
+  .calc-btn {
+    width: 100%; background: var(--orange); color: #fff; border: none; font-size: 21px; font-weight: 700;
+    padding: 16px; border-radius: 12px; cursor: pointer; font-family: inherit;
+  }
+  .calc-btn:hover { background: var(--orange-dark); }
+
+  /* Result */
+  #result { display: none; margin-top: 28px; }
+  .result-hero { background: linear-gradient(160deg, var(--teal) 0%, var(--teal-dark) 100%); color: #fff; border-radius: 18px; padding: 28px 24px; text-align: center; }
+  .result-hero .label { font-size: 17px; opacity: .85; }
+  .result-hero .big { font-size: 44px; font-weight: 800; line-height: 1.2; margin: 6px 0; }
+  .result-hero .yr { font-size: 17px; background: rgba(255,255,255,.15); border-radius: 999px; display: inline-block; padding: 4px 18px; margin-top: 8px; }
+  .breakdown { margin-top: 16px; }
+  .row { background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 16px 20px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; }
+  .row .name { font-weight: 700; font-size: 17px; }
+  .row .name small { display: block; font-weight: 400; font-size: 14px; color: var(--ink-soft); }
+  .row .amt { font-size: 19px; font-weight: 700; color: var(--teal-dark); white-space: nowrap; }
+  .note-fw { background: var(--gold); border-radius: 14px; padding: 16px 20px; font-size: 16px; margin-top: 14px; }
+  .not-eligible { background: var(--gold); border-radius: 14px; padding: 20px; font-size: 17px; }
+
+  /* Lead form */
+  .lead { padding: 56px 0; }
+  .lead-card { background: var(--card); border: 2px solid var(--teal); border-radius: 18px; padding: 32px 24px; text-align: center; }
+  .lead-card h2 { margin-bottom: 8px; }
+  .lead-card .gift { text-align: left; max-width: 460px; margin: 16px auto 24px; font-size: 17px; }
+  .lead-card .gift li { margin-bottom: 8px; list-style: none; }
+  .lead input[type=email] {
+    width: 100%; max-width: 420px; font-size: 18px; padding: 14px 16px; border: 2px solid var(--line);
+    border-radius: 12px; margin-bottom: 12px; font-family: inherit;
+  }
+  .lead input[type=email]:focus { outline: none; border-color: var(--teal); }
+  .survey { max-width: 460px; margin: 0 auto 20px; text-align: left; }
+  .survey p { font-weight: 700; font-size: 17px; margin-bottom: 10px; }
+  .lead-btn {
+    background: var(--orange); color: #fff; border: none; font-size: 20px; font-weight: 700;
+    padding: 15px 44px; border-radius: 12px; cursor: pointer; font-family: inherit;
+  }
+  .lead-btn:hover { background: var(--orange-dark); }
+  .privacy { font-size: 14px; color: var(--ink-soft); margin-top: 12px; }
+  #lead-done { display: none; background: var(--teal-light); border: 2px solid var(--teal); border-radius: 18px; padding: 40px 24px; text-align: center; font-size: 20px; font-weight: 700; color: var(--teal-dark); }
+
+  /* FAQ */
+  .faq { padding: 0 0 56px; }
+  .faq details { background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 18px 22px; margin-bottom: 12px; }
+  .faq summary { font-size: 18px; font-weight: 700; cursor: pointer; }
+  .faq details p { margin-top: 10px; color: var(--ink-soft); font-size: 17px; }
+
+  footer { background: var(--ink); color: #d1d5db; padding: 36px 0; font-size: 15px; }
+  footer a { color: #99f6e4; }
+  footer .disclaimer { margin-top: 12px; font-size: 14px; opacity: .8; }
+
+  @media (max-width: 480px) {
+    .hero h1 { font-size: 26px; }
+    .result-hero .big { font-size: 36px; }
+    .opt { flex: 1 1 100%; }
+  }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="badge">2026 長照 3.0 新制版</div>
+    <h1>家裡長輩需要照顧？<br>3 分鐘算出政府每月補助你多少</h1>
+    <p>長照 3.0 的「四包錢」每月最高 36,180 元，很多家庭根本不知道自己能領。免費試算，不用留資料就能看結果。</p>
+    <a class="cta" href="#calc">立即免費試算 →</a>
+    <div class="sub">已聘外籍看護的家庭，2026 新制也能申請！</div>
+  </div>
+</header>
+
+<section class="pains">
+  <div class="wrap">
+    <h2>這些情況，你是不是也遇到了？</h2>
+    <div class="pain-grid">
+      <div class="pain"><div class="emoji">😵</div><h3>看不懂規則</h3><p>1966 打不通，網路文章一篇一個說法，到底能領多少沒人講得清楚。</p></div>
+      <div class="pain"><div class="emoji">💸</div><h3>白白浪費額度</h3><p>政府給的補助額度每月歸零重算，沒用完就是送回去。</p></div>
+      <div class="pain"><div class="emoji">🧑‍🤝‍🧑</div><h3>請了看護就放棄</h3><p>以為聘外籍看護就不能申請長照——這在 2026 年已經改了。</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="calc" id="calc">
+  <div class="wrap">
+    <h2>長照 3.0 補助試算</h2>
+    <div class="calc-card">
+      <div class="q">
+        <span class="q-label"><span class="num">1</span>長輩的狀況是？</span>
+        <div class="opts" id="q1">
+          <label class="opt"><input type="radio" name="q1" value="ok"><span>65 歲以上，生活需要協助</span></label>
+          <label class="opt"><input type="radio" name="q1" value="ok"><span>失智症（不限年齡）</span></label>
+          <label class="opt"><input type="radio" name="q1" value="ok"><span>領有身心障礙證明</span></label>
+          <label class="opt"><input type="radio" name="q1" value="ok"><span>55 歲以上原住民，生活需協助</span></label>
+          <label class="opt opt-full"><input type="radio" name="q1" value="no"><span>以上都不是</span></label>
+        </div>
+      </div>
+      <div class="q">
+        <span class="q-label"><span class="num">2</span>日常生活的依賴程度？</span>
+        <div class="opts" id="q2">
+          <label class="opt"><input type="radio" name="q2" value="mild"><span>輕度<br><small>洗澡、家務等部分需要幫忙</small></span></label>
+          <label class="opt"><input type="radio" name="q2" value="mid"><span>中度<br><small>穿衣、移動多數需要幫忙</small></span></label>
+          <label class="opt"><input type="radio" name="q2" value="severe"><span>重度<br><small>幾乎全部日常都需要照顧</small></span></label>
+          <label class="opt"><input type="radio" name="q2" value="known"><span>已知 CMS 等級<br><small>照管專員評估過</small></span></label>
+        </div>
+        <div class="opts" id="cms-pick" style="display:none; margin-top:10px;">
+          <label class="opt"><input type="radio" name="cms" value="2"><span>第 2 級</span></label>
+          <label class="opt"><input type="radio" name="cms" value="3"><span>第 3 級</span></label>
+          <label class="opt"><input type="radio" name="cms" value="4"><span>第 4 級</span></label>
+          <label class="opt"><input type="radio" name="cms" value="5"><span>第 5 級</span></label>
+          <label class="opt"><input type="radio" name="cms" value="6"><span>第 6 級</span></label>
+          <label class="opt"><input type="radio" name="cms" value="7"><span>第 7 級</span></label>
+          <label class="opt"><input type="radio" name="cms" value="8"><span>第 8 級</span></label>
+        </div>
+        <div class="hint">正式等級由照管專員到府評估（CMS 2～8 級），這裡先幫你抓範圍。</div>
+      </div>
+      <div class="q">
+        <span class="q-label"><span class="num">3</span>家庭經濟身分？</span>
+        <div class="opts" id="q3">
+          <label class="opt"><input type="radio" name="q3" value="general" checked><span>一般戶</span></label>
+          <label class="opt"><input type="radio" name="q3" value="midlow"><span>中低收入戶</span></label>
+          <label class="opt"><input type="radio" name="q3" value="low"><span>低收入戶</span></label>
+        </div>
+      </div>
+      <div class="q">
+        <span class="q-label"><span class="num">4</span>是否已聘僱外籍看護？</span>
+        <div class="opts" id="q4">
+          <label class="opt"><input type="radio" name="q4" value="yes"><span>有</span></label>
+          <label class="opt"><input type="radio" name="q4" value="no" checked><span>沒有</span></label>
+        </div>
+      </div>
+      <button class="calc-btn" onclick="calculate()">算出我家的補助 💰</button>
+
+      <div id="result">
+        <div id="res-eligible">
+          <div class="result-hero">
+            <div class="label">你家每月最高可獲得政府補助</div>
+            <div class="big" id="res-monthly">—</div>
+            <div class="yr" id="res-yearly">—</div>
+          </div>
+          <div class="breakdown" id="res-rows"></div>
+          <div class="note-fw" id="res-fw" style="display:none">
+            ✅ <strong>你家已聘外籍看護：</strong>2026 長照 3.0 新制上路後，仍可申請喘息服務、日間照顧、輔具補助與交通接送。看護休假時，政府的照顧服務可以補位——很多家庭不知道這件事。
+          </div>
+          <div class="note-fw">
+            ⚠️ 以上為依公告基準的<strong>估算值</strong>，實際額度以照管專員評估的 CMS 等級與縣市規定為準。撥打 <strong>1966</strong> 長照專線即可申請評估（前 5 分鐘免費）。
+          </div>
+        </div>
+        <div id="res-no" class="not-eligible" style="display:none">
+          目前的狀況可能還不符合長照服務資格。不過各縣市仍有其他資源（身障服務、老人福利、急性後期照護 PAC），建議撥打 <strong>1966</strong> 由專人確認，或留下 Email，我們整理好資源地圖後寄給你。
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="lead" id="lead">
+  <div class="wrap">
+    <div class="lead-card" id="lead-card">
+      <h2>免費領取《長照 3.0 申請完全攻略》</h2>
+      <p style="color:var(--ink-soft)">試算只是第一步，申請流程才是關卡。輸入 Email 立即免費領取：</p>
+      <ul class="gift">
+        <li>📘 <strong>長照 3.0 申請完全攻略 PDF</strong>——1966 申請流程逐步圖解、評估前準備清單</li>
+        <li>📋 <strong>外籍看護期限檢查表</strong>——體檢、展延、聘僱許可期限一張表，避免被罰 3～15 萬</li>
+        <li>🔔 <strong>新制異動通知</strong>——補助規則一改，第一時間通知你</li>
+      </ul>
+      <form id="lead-form" onsubmit="return submitLead(event)">
+        <input type="email" id="email" placeholder="輸入你的 Email" required>
+        <div class="survey">
+          <p>順便問一句：如果有個 App 幫你追蹤補助額度、提醒喘息服務和看護期限，每月 149 元，你會？</p>
+          <div class="opts">
+            <label class="opt"><input type="radio" name="pay" value="yes"><span>會訂閱</span></label>
+            <label class="opt"><input type="radio" name="pay" value="maybe"><span>看功能再說</span></label>
+            <label class="opt"><input type="radio" name="pay" value="free-only"><span>只用免費的</span></label>
+            <label class="opt"><input type="radio" name="pay" value="no"><span>不需要</span></label>
+          </div>
+        </div>
+        <button class="lead-btn" type="submit">免費寄給我 📩</button>
+        <div class="privacy">我們重視你的隱私，資料僅用於寄送攻略與通知，隨時可取消訂閱。</div>
+      </form>
+    </div>
+    <div id="lead-done">
+      ✅ 收到！攻略正在路上，請到信箱收信（沒看到的話翻一下垃圾郵件夾）。
+    </div>
+  </div>
+</section>
+
+<section class="faq">
+  <div class="wrap">
+    <h2>常見問題</h2>
+    <details>
+      <summary>長照 3.0 和 2.0 差在哪？</summary>
+      <p>2026 年起分階段上路的長照 3.0，最大改變：①聘僱外籍看護的家庭也能使用日照、喘息、輔具等多元服務；②失智症者不限年齡皆可申請；③新增科技輔具補助（3 年 6 萬元）；④交通接送與營養照護額度調升。</p>
+    </details>
+    <details>
+      <summary>「四包錢」是哪四包？</summary>
+      <p>①照顧及專業服務（每月 10,020～36,180 元，依 CMS 等級）②交通接送（每月約 1,680～2,400 元，CMS 4 級以上）③輔具與居家無障礙改善（3 年 40,000 元，科技輔具另有 3 年 60,000 元）④喘息服務（每年 32,340～48,510 元）。</p>
+    </details>
+    <details>
+      <summary>要怎麼開始申請？</summary>
+      <p>三個管道：撥打 1966 長照專線、住院時透過出院準備服務、或直接聯繫各縣市照管中心。之後照管專員會到府評估，核定 CMS 等級後就能開始使用服務。</p>
+    </details>
+    <details>
+      <summary>自付額怎麼算？</summary>
+      <p>照顧服務與喘息服務：一般戶自付 16%、中低收入戶 5%、低收入戶 0%。輔具與交通接送：一般戶最高自付 30%、中低收入戶 10%、低收入戶 0%。</p>
+    </details>
+    <details>
+      <summary>這個網站跟政府有關係嗎？</summary>
+      <p>沒有。我們是獨立的家庭照顧者工具團隊，資料整理自衛福部公開資訊。正式申請請一律透過 1966 或各縣市照管中心。</p>
+    </details>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <strong>長照小幫手</strong>｜讓照顧這條路，不用一個人摸黑走。
+    <div class="disclaimer">
+      本站為民間資訊服務，與衛生福利部無關。試算結果僅供參考，實際補助以照管中心核定為準。資料來源：衛福部長照專區（1966）、長照給付及支付基準。<br>
+      © 2026 長照小幫手 · <a href="https://1966.gov.tw" target="_blank" rel="noopener">衛福部長照專區</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+// ── 長照 3.0 給付基準（元） ──────────────────────────────
+var CARE_BY_CMS = { 2: 10020, 3: 15460, 4: 18580, 5: 24100, 6: 28070, 7: 32090, 8: 36180 };
+var LEVEL_RANGE = { mild: [2, 3], mid: [4, 6], severe: [7, 8] };
+var RESPITE = { low: 32340, high: 48510 };      // 每年：CMS 2-6 / 7-8
+var TRANSPORT = 2400;                            // 每月上限（CMS 4 級以上，依縣市 1,680~2,400）
+var DEVICE = 40000;                              // 每 3 年
+var TECH_DEVICE = 60000;                         // 每 3 年（3.0 新增）
+var COPAY = { general: 0.16, midlow: 0.05, low: 0 };          // 照顧+喘息
+var COPAY_DEV = { general: 0.30, midlow: 0.10, low: 0 };      // 輔具+交通
+
+function val(name) {
+  var el = document.querySelector('input[name="' + name + '"]:checked');
+  return el ? el.value : null;
+}
+function fmt(n) { return 'NT$ ' + Math.round(n).toLocaleString('zh-TW'); }
+
+document.getElementById('q2').addEventListener('change', function () {
+  document.getElementById('cms-pick').style.display = (val('q2') === 'known') ? 'flex' : 'none';
+});
+
+function calculate() {
+  var q1 = val('q1'), q2 = val('q2');
+  if (!q1) { alert('請先選擇長輩的狀況（第 1 題）'); return; }
+  if (!q2) { alert('請選擇日常生活依賴程度（第 2 題）'); return; }
+  if (q2 === 'known' && !val('cms')) { alert('請選擇 CMS 等級'); return; }
+
+  var result = document.getElementById('result');
+  var eligible = document.getElementById('res-eligible');
+  var notEligible = document.getElementById('res-no');
+  result.style.display = 'block';
+
+  if (q1 === 'no') {
+    eligible.style.display = 'none';
+    notEligible.style.display = 'block';
+    result.scrollIntoView({ behavior: 'smooth' });
+    track('calc_not_eligible');
+    return;
+  }
+  eligible.style.display = 'block';
+  notEligible.style.display = 'none';
+
+  var cmsLo, cmsHi;
+  if (q2 === 'known') { cmsLo = cmsHi = parseInt(val('cms'), 10); }
+  else { cmsLo = LEVEL_RANGE[q2][0]; cmsHi = LEVEL_RANGE[q2][1]; }
+
+  var income = val('q3') || 'general';
+  var careLo = CARE_BY_CMS[cmsLo], careHi = CARE_BY_CMS[cmsHi];
+  var respite = cmsHi >= 7 ? RESPITE.high : RESPITE.low;
+  var transport = cmsHi >= 4 ? TRANSPORT : 0;
+  var copay = COPAY[income], copayDev = COPAY_DEV[income];
+
+  // 每月合計（照顧 + 交通）＋ 攤提喘息（/12）
+  var monthlyHi = careHi + transport + respite / 12;
+  var yearlyHi = monthlyHi * 12 + (DEVICE + TECH_DEVICE) / 3;
+
+  document.getElementById('res-monthly').textContent =
+    (careLo !== careHi ? '約 ' : '') + fmt(monthlyHi) + ' /月';
+  document.getElementById('res-yearly').textContent = '第一年最高合計約 ' + fmt(yearlyHi);
+
+  var rows = [
+    { name: '照顧及專業服務', sub: '居家照顧、日間照顧、專業復能（每月）',
+      amt: careLo !== careHi ? fmt(careLo) + ' ～ ' + fmt(careHi) + ' /月' : fmt(careHi) + ' /月',
+      copaySub: '一般自付 ' + (copay * 100) + '%（約 ' + fmt(careHi * copay) + '）' },
+    { name: '喘息服務', sub: '讓照顧者休息，照服員接手（每年）',
+      amt: fmt(respite) + ' /年', copaySub: '自付 ' + (copay * 100) + '%' }
+  ];
+  if (transport) rows.push({ name: '交通接送', sub: '就醫、復健往返（每月，依縣市）',
+    amt: '最高 ' + fmt(transport) + ' /月', copaySub: '自付最高 ' + (copayDev * 100) + '%' });
+  rows.push({ name: '輔具＋居家無障礙', sub: '輪椅、扶手、防滑改善（每 3 年）',
+    amt: fmt(DEVICE) + ' /3年', copaySub: '自付最高 ' + (copayDev * 100) + '%' });
+  rows.push({ name: '科技輔具（3.0 新增）', sub: '離床感測、跌倒偵測等（每 3 年）',
+    amt: fmt(TECH_DEVICE) + ' /3年', copaySub: '自付最高 ' + (copayDev * 100) + '%' });
+
+  document.getElementById('res-rows').innerHTML = rows.map(function (r) {
+    return '<div class="row"><div class="name">' + r.name + '<small>' + r.sub + '</small></div>' +
+      '<div><div class="amt">' + r.amt + '</div><small style="color:var(--ink-soft)">' + r.copaySub + '</small></div></div>';
+  }).join('');
+
+  document.getElementById('res-fw').style.display = (val('q4') === 'yes') ? 'block' : 'none';
+  result.scrollIntoView({ behavior: 'smooth' });
+  track('calc_done_cms' + cmsHi + '_' + income);
+}
+
+// ── Email 名單（MailerLite 免費方案，帳號已有）─────────────
+// 部署前到 MailerLite 後台建一個嵌入式表單（Forms → Embedded form），
+// 從表單嵌入碼裡找出 account ID 與 form ID 填到下面兩個變數。
+var ML_ACCOUNT_ID = 'ML_ACCOUNT_ID_PLACEHOLDER';
+var ML_FORM_ID = 'ML_FORM_ID_PLACEHOLDER';
+
+function submitLead(e) {
+  e.preventDefault();
+  var email = document.getElementById('email').value.trim();
+  var pay = val('pay') || 'unanswered';
+  track('lead_submit_' + pay);
+
+  var done = function () {
+    document.getElementById('lead-card').style.display = 'none';
+    document.getElementById('lead-done').style.display = 'block';
+  };
+
+  if (ML_FORM_ID.indexOf('PLACEHOLDER') !== -1) {
+    // 尚未設定 MailerLite：先存在本機，方便測試
+    try {
+      var leads = JSON.parse(localStorage.getItem('ltc_leads') || '[]');
+      leads.push({ email: email, pay: pay, at: new Date().toISOString() });
+      localStorage.setItem('ltc_leads', JSON.stringify(leads));
+    } catch (err) {}
+    done();
+    return false;
+  }
+
+  var body = new URLSearchParams();
+  body.append('fields[email]', email);
+  body.append('fields[pay_intent]', pay);   // 需在 MailerLite 先建自訂欄位 pay_intent
+  body.append('ml-submit', '1');
+  fetch('https://assets.mailerlite.com/jsonp/' + ML_ACCOUNT_ID + '/forms/' + ML_FORM_ID + '/subscribe', {
+    method: 'POST',
+    body: body
+  }).then(done).catch(done);
+  return false;
+}
+
+// ── 極簡事件追蹤（先進 localStorage，之後可換 GA4）─────────
+function track(evt) {
+  try {
+    var log = JSON.parse(localStorage.getItem('ltc_events') || '[]');
+    log.push({ e: evt, at: new Date().toISOString() });
+    localStorage.setItem('ltc_events', JSON.stringify(log));
+  } catch (err) {}
+}
+</script>
+</body>
+</html>
