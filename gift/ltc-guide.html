@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="zh-Hant-TW">
+<head>
+<meta charset="UTF-8">
+<title>長照 3.0 申請完全攻略</title>
+<style>
+  @page { size: A4; margin: 0; }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: "Microsoft JhengHei", "PingFang TC", sans-serif; color: #1f2937; }
+  .page { width: 210mm; height: 296mm; padding: 18mm 16mm; page-break-after: always; position: relative; overflow: hidden; }
+  .page:last-child { page-break-after: auto; }
+
+  :root { --teal:#0f766e; --teal-dark:#115e59; --teal-light:#f0fdfa; --orange:#ea580c; --ink:#1f2937; --soft:#4b5563; --line:#e5e7eb; --gold:#fef3c7; }
+
+  /* 封面 */
+  .cover { background: linear-gradient(160deg, #0f766e 0%, #115e59 100%); color:#fff; display:flex; flex-direction:column; justify-content:center; text-align:center; }
+  .cover .badge { display:inline-block; border:1.5px solid rgba(255,255,255,.5); border-radius:999px; padding:5px 22px; font-size:15px; margin:0 auto 26px; background:rgba(255,255,255,.12); }
+  .cover h1 { font-size:44px; line-height:1.35; margin-bottom:14px; }
+  .cover .sub { font-size:21px; opacity:.92; margin-bottom:38px; }
+  .cover .box { background:rgba(255,255,255,.12); border:1.5px solid rgba(255,255,255,.35); border-radius:16px; padding:22px 30px; max-width:130mm; margin:0 auto; text-align:left; font-size:17px; line-height:2; }
+  .cover .foot { position:absolute; bottom:16mm; left:0; right:0; text-align:center; font-size:14px; opacity:.8; }
+
+  h2.sec { font-size:27px; color:var(--teal-dark); border-left:8px solid var(--orange); padding-left:14px; margin-bottom:18px; }
+  p, li { font-size:15.5px; line-height:1.9; color:var(--ink); }
+  .lead-p { font-size:16px; color:var(--soft); margin-bottom:16px; }
+  .card { background:#fff; border:1.5px solid var(--line); border-radius:12px; padding:14px 18px; margin-bottom:12px; }
+  .card h3 { font-size:17.5px; color:var(--teal-dark); margin-bottom:4px; }
+  .card p { font-size:15px; color:var(--soft); }
+  .hl { background:var(--gold); border-radius:10px; padding:12px 16px; font-size:15px; margin:14px 0; line-height:1.85; }
+  .hl b { color:#b45309; }
+
+  table { border-collapse:collapse; width:100%; margin:12px 0; }
+  th { background:var(--teal); color:#fff; font-size:15px; padding:9px 10px; text-align:left; }
+  td { border:1px solid var(--line); padding:9px 10px; font-size:15px; background:#fff; }
+  tr:nth-child(even) td { background:#f8fafc; }
+  td.num { text-align:right; font-weight:bold; color:var(--teal-dark); white-space:nowrap; }
+
+  .step { display:flex; gap:14px; margin-bottom:14px; align-items:flex-start; }
+  .step .n { flex-shrink:0; width:34px; height:34px; border-radius:50%; background:var(--orange); color:#fff; font-size:18px; font-weight:bold; text-align:center; line-height:34px; }
+  .step h3 { font-size:17.5px; margin-bottom:2px; }
+  .step p { font-size:15px; color:var(--soft); }
+
+  .check-table td:first-child { width:8mm; text-align:center; font-size:18px; }
+  .warn-cell { color:#b91c1c; font-weight:bold; }
+
+  .pgfoot { position:absolute; bottom:10mm; left:16mm; right:16mm; display:flex; justify-content:space-between; font-size:12px; color:#9ca3af; border-top:1px solid var(--line); padding-top:6px; }
+
+  .backcover { background:var(--teal-light); display:flex; flex-direction:column; justify-content:center; text-align:center; }
+  .backcover h2 { font-size:30px; color:var(--teal-dark); margin-bottom:14px; }
+  .backcover p { font-size:17px; max-width:140mm; margin:0 auto 10px; }
+  .backcover .url { display:inline-block; background:var(--teal); color:#fff; border-radius:12px; padding:12px 30px; font-size:19px; font-weight:bold; margin:16px auto; }
+  .backcover .fine { font-size:13px; color:#6b7280; max-width:150mm; margin:26px auto 0; line-height:1.8; }
+</style>
+</head>
+<body>
+
+<!-- 封面 -->
+<div class="page cover">
+  <div><span class="badge">2026 長照 3.0 新制版</span></div>
+  <h1>長照 3.0<br>申請完全攻略</h1>
+  <div class="sub">四包錢額度表・1966 申請五步驟・評估前準備清單</div>
+  <div class="box">
+    本攻略包含：<br>
+    📘 長照 3.0 新制重點與請領資格<br>
+    💰 四包錢完整額度表（CMS 2～8 級）<br>
+    📞 1966 申請流程五步驟＋準備清單<br>
+    📋 外籍看護期限檢查表（可列印勾選）
+  </div>
+  <div class="foot">長照補助試算器 出品｜youfuxu.github.io/ltc-helper</div>
+</div>
+
+<!-- P2 認識長照 3.0 -->
+<div class="page">
+  <h2 class="sec">三分鐘看懂長照 3.0</h2>
+  <p class="lead-p">長照 3.0 自 2026 年起分階段上路，是政府長照制度的第三版。如果你家有長輩需要照顧，這些改變直接影響你能拿到的資源：</p>
+  <div class="card"><h3>① 聘外籍看護的家庭，也能用長照服務了</h3><p>過去請了外籍看護，多數長照服務就不能用。新制放寬：日間照顧、喘息服務、輔具補助、交通接送都可以申請——看護休假時，政府服務可以補位。</p></div>
+  <div class="card"><h3>② 失智症者不限年齡皆可申請</h3><p>只要經診斷有失智症，不論幾歲都能申請長照服務，不再受年齡門檻限制。</p></div>
+  <div class="card"><h3>③ 新增科技輔具補助</h3><p>離床感測、跌倒偵測、遠端關懷等科技輔具，每 3 年最高 60,000 元，與一般輔具補助（3 年 40,000 元）分開計算。</p></div>
+  <div class="card"><h3>④ 交通接送與營養照護額度調升</h3><p>就醫、復健的交通接送補助提高，另新增營養照護相關服務。</p></div>
+
+  <h2 class="sec" style="margin-top:22px">誰可以申請？</h2>
+  <p>符合以下任一身分，就值得打 1966 申請評估：</p>
+  <ul style="padding-left:24px; margin-top:6px">
+    <li>65 歲以上，日常生活需要協助（失能）的長輩</li>
+    <li>55 歲以上失能原住民</li>
+    <li>經診斷為失智症者（不限年齡）</li>
+    <li>不限年齡的身心障礙失能者</li>
+  </ul>
+  <div class="hl">💡 <b>很多家庭的誤解：</b>「有請外籍看護＝不能申請長照」。2026 新制後這是錯的——喘息、日照、輔具、交通都能用。不確定就打 1966 問，電話前 5 分鐘免費。</div>
+  <div class="pgfoot"><span>長照 3.0 申請完全攻略</span><span>2</span></div>
+</div>
+
+<!-- P3 四包錢 -->
+<div class="page">
+  <h2 class="sec">「四包錢」完整額度表</h2>
+  <p class="lead-p">長照補助不是一筆錢，而是四個各自獨立的額度。照管專員評估後會核定 CMS 等級（2～8 級），等級越高、額度越高。</p>
+
+  <h3 style="font-size:18px; color:var(--teal-dark); margin-bottom:6px">💰 第一包：照顧及專業服務（每月）</h3>
+  <table>
+    <tr><th>CMS 等級</th><th>失能程度</th><th style="text-align:right">每月額度</th></tr>
+    <tr><td>第 2 級</td><td>輕度</td><td class="num">10,020 元</td></tr>
+    <tr><td>第 3 級</td><td>輕度</td><td class="num">15,460 元</td></tr>
+    <tr><td>第 4 級</td><td>中度</td><td class="num">18,580 元</td></tr>
+    <tr><td>第 5 級</td><td>中度</td><td class="num">24,100 元</td></tr>
+    <tr><td>第 6 級</td><td>中重度</td><td class="num">28,070 元</td></tr>
+    <tr><td>第 7 級</td><td>重度</td><td class="num">32,090 元</td></tr>
+    <tr><td>第 8 級</td><td>極重度</td><td class="num">36,180 元</td></tr>
+  </table>
+
+  <h3 style="font-size:18px; color:var(--teal-dark); margin:10px 0 6px">其他三包</h3>
+  <table>
+    <tr><th>項目</th><th>額度</th><th>備註</th></tr>
+    <tr><td>🚗 交通接送</td><td class="num">每月約 1,680～2,400 元</td><td>CMS 4 級以上，依縣市規定</td></tr>
+    <tr><td>🦽 輔具與居家無障礙</td><td class="num">每 3 年 40,000 元</td><td>科技輔具另有每 3 年 60,000 元</td></tr>
+    <tr><td>😌 喘息服務</td><td class="num">每年 32,340～48,510 元</td><td>CMS 2～6 級／7～8 級</td></tr>
+  </table>
+
+  <div class="hl">⚠️ <b>額度每月歸零重算</b>——照顧服務額度當月沒用完不會累積到下個月，等於白白送回去。建議每月月初就和居服單位排好服務。實際使用需依身分別負擔部分費用（低收入戶免部分負擔），以照管中心核定為準。</div>
+  <div class="pgfoot"><span>長照 3.0 申請完全攻略</span><span>3</span></div>
+</div>
+
+<!-- P4 申請流程 -->
+<div class="page">
+  <h2 class="sec">申請流程五步驟</h2>
+  <div class="step"><div class="n">1</div><div><h3>撥打 1966 長照專線（或另兩個管道）</h3><p>手機、市話直撥 1966，前 5 分鐘免費。長輩住院中可透過「出院準備服務」直接申請；也可以聯繫各縣市照管中心。</p></div></div>
+  <div class="step"><div class="n">2</div><div><h3>照管專員到府評估</h3><p>約 1～2 週內，照顧管理專員會到家裡評估長輩的身體狀況、認知功能與家庭照顧狀況，過程約 1 小時。</p></div></div>
+  <div class="step"><div class="n">3</div><div><h3>核定 CMS 等級與額度</h3><p>評估後核定 CMS 2～8 級，等級決定四包錢的額度。結果會以公文通知。</p></div></div>
+  <div class="step"><div class="n">4</div><div><h3>A 個管員擬定照顧計畫</h3><p>個案管理員（A 個管）會和你討論需求，把額度轉成具體服務：居服員時數、日照名額、喘息安排、輔具採購等。</p></div></div>
+  <div class="step"><div class="n">5</div><div><h3>服務單位進場，開始使用</h3><p>由特約服務單位提供服務，費用直接從額度扣，家庭只付部分負擔。之後狀況改變可隨時申請重新評估。</p></div></div>
+
+  <h2 class="sec" style="margin-top:18px">評估前準備清單</h2>
+  <table class="check-table">
+    <tr><td>☐</td><td>長輩的身分證、健保卡</td></tr>
+    <tr><td>☐</td><td>診斷證明或病歷摘要（失智症者尤其重要）</td></tr>
+    <tr><td>☐</td><td>身心障礙證明（若有）</td></tr>
+    <tr><td>☐</td><td>外籍看護聘僱許可資料（若有聘僱）</td></tr>
+    <tr><td>☐</td><td>先想好：白天誰在家？最需要協助的三件事是什麼？</td></tr>
+    <tr><td>☐</td><td>把長輩「最差的狀態」如實描述，不要客氣——評估等級影響額度</td></tr>
+  </table>
+  <div class="pgfoot"><span>長照 3.0 申請完全攻略</span><span>4</span></div>
+</div>
+
+<!-- P5 外籍看護期限檢查表 -->
+<div class="page">
+  <h2 class="sec">外籍看護期限檢查表</h2>
+  <p class="lead-p">聘僱外籍看護的家庭，這些法定期限漏辦就是罰款。建議列印這頁貼在冰箱上，每項寫上你家的到期日。</p>
+  <table class="check-table">
+    <tr><th style="width:8mm">✓</th><th>項目</th><th>期限</th><th>漏辦後果</th></tr>
+    <tr><td>☐</td><td><b>入國後健康檢查</b></td><td>看護入境後 3 個工作日內</td><td class="warn-cell">影響聘僱許可</td></tr>
+    <tr><td>☐</td><td><b>定期健康檢查（三次）</b><br><span style="color:#6b7280;font-size:13.5px">你家的日期：＿＿＿／＿＿＿／＿＿＿</span></td><td>聘僱許可生效日起<b>滿 6、18、30 個月</b>之日<b>前後 30 日內</b></td><td class="warn-cell">罰 6 萬～30 萬<br><span style="font-size:13px">（就服法 §57、§67）</span></td></tr>
+    <tr><td>☐</td><td><b>居留證申請／延期</b></td><td>入國後 15 日內申請；效期屆滿前辦延期</td><td class="warn-cell">逾期居留罰鍰</td></tr>
+    <tr><td>☐</td><td><b>聘僱許可續聘</b><br><span style="color:#6b7280;font-size:13.5px">許可效期 3 年，到期日：＿＿＿＿＿</span></td><td>效期屆滿前 <b>4 個月內</b>提出續聘或期滿轉換</td><td class="warn-cell">看護須離境，<br>照顧中斷</td></tr>
+    <tr><td>☐</td><td><b>就業安定費</b></td><td>每季繳納（家庭看護每月 2,000 元；符合資格者減免）</td><td class="warn-cell">加徵滯納金</td></tr>
+    <tr><td>☐</td><td><b>看護護照效期</b></td><td>建議效期至少涵蓋聘僱期間</td><td>影響展延與轉換</td></tr>
+  </table>
+  <div class="hl">📌 <b>三個實用習慣：</b>①收到聘僱許可函當天，就把三次健檢日期算好寫進手機行事曆（提前 30 天提醒）；②委任仲介的家庭，仍要自己記一份——仲介漏辦，罰的是雇主；③移工事務不清楚就打 <b>1955 專線</b>（24 小時免付費）。</div>
+
+  <h2 class="sec" style="margin-top:16px">求助資源一覽</h2>
+  <table>
+    <tr><th>需求</th><th>找誰</th></tr>
+    <tr><td>申請長照服務、額度問題</td><td><b>1966</b> 長照專線／各縣市照管中心</td></tr>
+    <tr><td>外籍看護聘僱、期限、爭議</td><td><b>1955</b> 勞動部移工專線（24 小時）</td></tr>
+    <tr><td>照顧到喘不過氣、需要有人聊聊</td><td><b>0800-507-272</b> 家庭照顧者關懷專線</td></tr>
+    <tr><td>輔具評估與補助</td><td>各縣市輔具資源中心</td></tr>
+  </table>
+  <div class="pgfoot"><span>長照 3.0 申請完全攻略</span><span>5</span></div>
+</div>
+
+<!-- 封底 -->
+<div class="page backcover">
+  <h2>額度會變、規則會改，<br>試算器隨時幫你算最新的</h2>
+  <p>這份攻略的數字是 2026 年 7 月的公告基準。之後新制若有異動，我們會透過 Email 通知你，也歡迎隨時回到試算器重新試算：</p>
+  <div><span class="url">youfuxu.github.io/ltc-helper</span></div>
+  <p style="font-size:16px; color:#4b5563">3 分鐘，算出你家每月最高能領多少。</p>
+  <div class="fine">本攻略為民間資訊服務，與衛生福利部、勞動部無關。內容依 2026 年 7 月公開資料整理（衛福部長照專區、長照給付及支付基準、就業服務法），實際補助額度以照管中心核定為準、聘僱規定以勞動部公告為準。本文件免費提供給「長照補助試算器」訂閱者，歡迎分享給需要的家庭，請勿販售。<br>版本：v1.0（2026-07）</div>
+</div>
+
+</body>
+</html>
